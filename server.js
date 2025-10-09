@@ -54,7 +54,11 @@ app.use('/api/messages', messageRouter);
 // * CONNECT TO MONGODB
 
 await connectDB();
-const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => console.log('Server is running on PORT: ' + PORT));
-// 3 hours and 44 mins
+  server.listen(PORT, () => console.log('Server is running on PORT: ' + PORT));
+}
+
+// EXPORT SERVER FOR VERCEL
+export default server;
