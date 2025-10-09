@@ -1,6 +1,6 @@
 // GET ALL USER EXCEPT THE LOGGED UN USER
 import cloudinary from '../lib/cloudinary.js';
-import { userSocketMap } from '../server.js';
+import { io, userSocketMap } from '../server.js';
 import Message from './../models/Message.js';
 import User from './../models/User.js';
 
@@ -39,7 +39,7 @@ export const getMessages = async (req, res) => {
     const { id: selectedUserId } = req.params;
     const myId = req.user._id;
 
-    const message = await Message.find({
+    const messages = await Message.find({
       $or: [
         {
           senderId: myId,
@@ -57,7 +57,7 @@ export const getMessages = async (req, res) => {
       { seen: true }
     );
 
-    res.json({ success: true, message });
+    res.json({ success: true, messages });
   } catch (error) {
     console.log('🚀 ~ signup ~ error.message:', error.message);
     res.json({ success: false, message: error.message });
