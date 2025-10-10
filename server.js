@@ -16,7 +16,11 @@ const server = http.createServer(app);
 
 // INITIALIZE SOCKET.IO SERVER
 export const io = new Server(server, {
-  cors: { origin: '*' },
+  cors: {
+    origin: ['https://chat-app-gr.vercel.app'],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
 });
 
 // STORE ONLINE USERS
