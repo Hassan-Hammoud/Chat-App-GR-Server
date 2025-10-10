@@ -55,14 +55,18 @@ app.use('/api/status', (req, res) => res.send('Server is live'));
 app.use('/api/auth', userRouter);
 app.use('/api/messages', messageRouter);
 
+// await connectDB();
+// if (process.env.NODE_ENV !== 'production') {
+//   const PORT = process.env.PORT || 3000;
+
+//   server.listen(PORT, () => console.log('Server is running on PORT: ' + PORT));
+// } // ! this is use it in vercel backend deployment
+
 // * CONNECT TO MONGODB
-
 await connectDB();
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 3000;
 
-  server.listen(PORT, () => console.log('Server is running on PORT: ' + PORT));
-}
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => console.log('🚀 Server running on PORT: ' + PORT)); // ! this is use it in render backend deployment
 
 // EXPORT SERVER FOR VERCEL
 export default server;
