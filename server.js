@@ -17,9 +17,10 @@ const server = http.createServer(app);
 // INITIALIZE SOCKET.IO SERVER
 export const io = new Server(server, {
   cors: {
-    origin: ['https://chat-app-gr.vercel.app'],
+    origin: '*',
     methods: ['GET', 'POST'],
     credentials: true,
+    // origin: ['https://chat-app-gr.vercel.app'],
   },
 });
 
@@ -48,7 +49,14 @@ io.on('connection', socket => {
 
 // * MIDDLEWARE setup
 app.use(express.json({ limit: '4mb' }));
-app.use(cors());
+// app.use(cors());
+
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+);
 
 // * ROUTES SETUP
 app.use('/api/status', (req, res) => res.send('Server is live'));
